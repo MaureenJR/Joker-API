@@ -1,5 +1,7 @@
 const Joke = require("../models/jokes.model")
 
+//CRUD = C -> Create / R -> Read / U -> Update / D -> Delete
+
 //Devuelve todos los chistes
 module.exports.findAllJokes = (req, res) => {
     Joke.find()
@@ -23,14 +25,14 @@ module.exports.createNewJoke = (req, res) => {
 
 //Actualizar chiste
 module.exports.updateExistingJoke = (req, res) =>{
-    Joke.findOneAndUpdate({ _id: req.params.id }, req.body, { new:true })
+    Joke.findOneAndUpdate({ _id: req.params.id }, req.body, { new:true, runValidators: true })
         .then(updatedJoke => res.json({ joke: updatedJoke }))
         .catch(err => res.json({ message: "Something went wrong", error: err }));
-}
+};
 
 //Borrar chiste
 module.exports.deleteJoke = (req, res) => {
     Joke.deleteOne({ _id: req.params.id })
-        .then(result => res.json({ results: results }))
+        .then(result => res.json({ result: result }))
         .catch(err => res.json({ message: "Something went wrong", error: err }));
 };
